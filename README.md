@@ -17,3 +17,6 @@ npm start
 launch the browser and goto: http://localhost:3000
 
 You can login, join a group or create one and start chatting.
+
+Preview
+![alt text](react-chat-app.png "Logo Title Text 1")
