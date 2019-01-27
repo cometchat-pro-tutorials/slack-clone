@@ -1,0 +1,21 @@
+h3 {
+  color: #529cca;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.login {
+  display:absolute;
+  width: 400px;
+  margin-left: 400px;
+  margin-top:200px;
+}
+
+.groupname {
+  width: 300px !important;
+  margin-left: 200 !important;
+}
+
+body {
+  background: white;
+}
