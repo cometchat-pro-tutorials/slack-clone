@@ -15,9 +15,7 @@ class App extends Component {
       redirect: false
     };
 
-    this.UID = "SUPERHERO1";
-    // this.login = this.login.bind(this);
-
+  
     CometChat.init(API_ID).then(
       hasInitialized => {
         console.log("Initialization completed successfully", hasInitialized);

@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { CometChat } from "@cometchat-pro/chat";
 import { API_KEY } from "../../settings";
 import "./index.css";
-import Loading from "./loading.svg"
+import Loading from "./loading.svg";
 
 export default class Login extends Component {
   constructor(props) {
@@ -26,11 +26,11 @@ export default class Login extends Component {
   onSubmit(e) {
     e.preventDefault();
     this.isLoggedIn();
-    this.setState({isLoading:true})
+    this.setState({ isLoading: true });
   }
 
   handleChange(e) {
-    this.setState({ userName: e.target.value });
+    this.setState({ userName: e.target.value.toUpperCase() });
   }
 
   renderRedirect = () => {
@@ -65,10 +65,18 @@ export default class Login extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <button className="button modalbutton">Create Group</button>
+              <button className="button modalbutton">Login</button>
             </form>
             <div>{this.state.error}</div>
-            <div>{this.state.isLoading? <p className="loading"><img alt="loading" src={Loading}/></p>: ""}</div>
+            <div>
+              {this.state.isLoading ? (
+                <p className="loading">
+                  <img alt="loading" src={Loading} />
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
       </React.Fragment>

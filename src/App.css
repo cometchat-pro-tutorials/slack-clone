@@ -1,10 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400, 600, 700);
 
 body {
-  background-color: #DCDCDC;
+  background-color: #dcdcdc;
   font: 600 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Lato,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    color:#4b4b4b;
+  color: #4b4b4b;
 }
 
 .container {
@@ -12,7 +12,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 50px);
   grid-gap: 3px;
-  margin-top:15px;
+  margin-top: 15px;
 }
 
 /* General Buttons */
@@ -318,7 +318,22 @@ a {
   display: block;
   z-index: 2;
 }
+
+.chat .uid {
+  position: relative;
+  display: block;
+  font-size: 10px !important;
+  z-index: 2;
+}
+
 .chat .avatar img {
+  background-color: rgba(255, 255, 255, 0.9);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.chat .uid img {
   background-color: rgba(255, 255, 255, 0.9);
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -379,7 +394,7 @@ a {
 .self .avatar {
   order: 2;
 }
-/* .self .avatar:after {
+.self .avatar:after {
   content: "";
   position: relative;
   display: inline-block;
@@ -391,7 +406,7 @@ a {
   border-right-color: transparent;
   border-top-color: transparent;
   box-shadow: 0px 2px 0px #d4d4d4;
-} */
+}
 
 .msg {
   background: white;
@@ -447,8 +462,6 @@ a {
   display: inline-block;
   margin-right: 4px;
 }
-
-
 
 ::-webkit-scrollbar {
   min-width: 12px;
