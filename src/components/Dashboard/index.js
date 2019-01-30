@@ -5,13 +5,23 @@ import Groups from "../Groups";
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
+    this.state = {
+      group: "supergroup"
+    };
+
+    this.updateState = this.updateState.bind(this);
+    this.self = this;
   }
+
+  updateState(group) {
+    this.self.setState({ group: group });
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Groups />
-        <Chatbox />
+        <Groups updateState={this.updateState} />
+        <Chatbox state={this.state} />
       </React.Fragment>
     );
   }

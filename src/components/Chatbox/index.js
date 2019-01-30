@@ -7,9 +7,9 @@ export default class Chatbox extends Component {
     super(props);
 
     this.state = {
+      receiverID: this.props.state.group,
       messageText: null,
-      groupMessage: [],
-      receiverID: "javascript"
+      groupMessage: []
     };
 
     this.receiverID = this.state.receiverID;
@@ -19,15 +19,16 @@ export default class Chatbox extends Component {
     this.send = this.send.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.update = this.update.bind(this);
   }
 
-  componentDidMount() {
+  componentWillReceiveProps() {
     this.update();
   }
 
   update() {
     this.messagesRequest = new CometChat.MessagesRequestBuilder()
-      .setGUID(this.receiverID)
+      .setGUID(this.state.receiverID)
       .setLimit(this.limit)
       .build();
 
@@ -45,7 +46,7 @@ export default class Chatbox extends Component {
 
   send() {
     this.textMessage = new CometChat.TextMessage(
-      this.receiverID,
+      this.state.receiverID, //the group you want to render. In our case we are getting it from the parent state
       this.state.messageText,
       this.messageType,
       this.receiverType
@@ -53,7 +54,7 @@ export default class Chatbox extends Component {
     CometChat.sendMessage(this.textMessage).then(
       message => {
         console.log("Message sent successfully:", message);
-        // Do something with message
+        // Update request new data from the api and update the state on componentDIdMount
         this.update();
       },
       error => {
@@ -78,21 +79,13 @@ export default class Chatbox extends Component {
       <React.Fragment>
         <div className="chatWindow">
           <ol className="chat">
-            <li className="other">
-              <div className="avatar">Alex</div>
-              <div className="msg">
-                <p>
-                  Hola! <time> 20:17</time>
-                </p>
-              </div>
-            </li>
             {this.state.groupMessage.map(data => (
               <li className="self" key={data.id}>
                 <div className="msg">
                   <p>
-                    {data.data.text} <time> {data.time}</time>
+                    {data.sender.uid} <time> {data.time}</time>
                   </p>
-                  <div className="">{data.sender.uid}</div>
+                  <div className=""> {data.data.text}</div>
                 </div>
               </li>
             ))}

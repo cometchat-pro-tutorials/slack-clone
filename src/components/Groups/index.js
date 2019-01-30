@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { CometChat } from "@cometchat-pro/chat";
 import { Link } from "react-router-dom";
-import Chatbox from "../Chatbox";
 import "./index.css";
 
 export default class Groups extends Component {
@@ -42,12 +41,12 @@ export default class Groups extends Component {
     CometChat.joinGroup(this.GUID, this.groupType, this.password).then(
       group => {
         console.log("Group joined successfully:", group);
-        localStorage.setItem("guid", this.GUID);
       },
       error => {
         console.log("Group joining failed with exception:", error.code);
         if (error.code === "ERR_ALREADY_JOINED") {
-          localStorage.setItem("guid", this.GUID);
+          // update the state of the parent
+          this.props.updateState(e);
         }
       }
     );
