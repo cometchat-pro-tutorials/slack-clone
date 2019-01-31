@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@cometchat-pro/chat": "^1.0.1",
+    "@cometchat-pro/chat": "^1.0.3",
+    "@cometchat-pulse/cometchat-pulse.js": "0.0.12",
     "minibus": "^3.1.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

@@ -25,7 +25,9 @@ export default class Chatbox extends Component {
   componentWillReceiveProps() {
     this.update();
   }
-
+  componentDidMount(){
+    this.update()
+  }
   update() {
     this.messagesRequest = new CometChat.MessagesRequestBuilder()
       .setGUID(this.state.receiverID)
