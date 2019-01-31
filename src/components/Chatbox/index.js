@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { CometChat } from "@cometchat-pro/chat";
+import "./index.css";
 // import Groups from "../Groups";
 
 export default class Chatbox extends Component {
@@ -25,17 +26,21 @@ export default class Chatbox extends Component {
   componentWillReceiveProps() {
     this.update();
   }
-  componentDidMount(){
-    this.update()
+  componentDidMount() {
+    this.update();
   }
+
+  // this is meant to be fired each time you want to update the state with the current data from the api
+  // So it's fired each time the component mounts and also each time the component recieves props to update the chat ui.
   update() {
     this.messagesRequest = new CometChat.MessagesRequestBuilder()
-      .setGUID(this.state.receiverID)
+      .setGUID(this.props.state.group)
       .setLimit(this.limit)
       .build();
 
     this.messagesRequest.fetchPrevious().then(
       messages => {
+      //  this line is left here for debugging purposes
         console.log("Message list fetched:", messages);
         //Handle the list of messages
         this.setState({ groupMessage: messages });
@@ -48,7 +53,7 @@ export default class Chatbox extends Component {
 
   send() {
     this.textMessage = new CometChat.TextMessage(
-      this.state.receiverID, //the group you want to render. In our case we are getting it from the parent state
+      this.props.state.group, //the group you want to render. In our case we are getting it from the parent state
       this.state.messageText,
       this.messageType,
       this.receiverType
@@ -82,12 +87,13 @@ export default class Chatbox extends Component {
         <div className="chatWindow">
           <ol className="chat">
             {this.state.groupMessage.map(data => (
+              
               <li className="self" key={data.id}>
                 <div className="msg">
                   <p>
                     {data.sender.uid} <time> {data.time}</time>
                   </p>
-                  <div className=""> {data.data.text}</div>
+                  <div className="message"> {data.data.text}</div>
                 </div>
               </li>
             ))}

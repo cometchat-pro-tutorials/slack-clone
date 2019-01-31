@@ -5,10 +5,10 @@ h3 {
 }
 
 .login {
-  display:absolute;
+  display: absolute;
   width: 400px;
   margin-left: 400px;
-  margin-top:200px;
+  margin-top: 200px;
 }
 
 .groupname {
@@ -20,6 +20,13 @@ body {
   background: white;
 }
 
-.loading{
-  margin-left:150px;
+.loading {
+  margin-left: 150px;
+}
+
+.error {
+  color: red;
+  margin-left: 100px;
+  font-size: 10px !important;
+  font-style: italic;
 }

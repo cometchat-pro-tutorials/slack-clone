@@ -16,7 +16,6 @@ export default class Login extends Component {
 
     this.state = {
       redirect: false,
-      userStatus: "",
       userName: "",
       isLoading: false,
       error: ""
@@ -26,7 +25,7 @@ export default class Login extends Component {
   onSubmit(e) {
     e.preventDefault();
     this.isLoggedIn();
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, error:"" });
   }
 
   handleChange(e) {
@@ -45,7 +44,10 @@ export default class Login extends Component {
       },
       error => {
         console.log("Login failed with exception:", { error });
-        // this.setState({ error: "Login failed", isLoading:false });
+        this.setState({
+          error: "Login failed, please enter a valid username",
+          isLoading: false
+        });
       }
     );
   }
@@ -67,7 +69,7 @@ export default class Login extends Component {
               </div>
               <button className="button modalbutton">Login</button>
             </form>
-            <div>{this.state.error}</div>
+            <div className="error">{this.state.error}</div>
             <div>
               {this.state.isLoading ? (
                 <p className="loading">

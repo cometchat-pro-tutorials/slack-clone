@@ -38,16 +38,15 @@ export default class Groups extends Component {
     this.password = "";
     this.groupType = CometChat.GROUP_TYPE.PUBLIC;
 
+    this.props.updateState(e);
+   
+
     CometChat.joinGroup(this.GUID, this.groupType, this.password).then(
       group => {
         console.log("Group joined successfully:", group);
       },
       error => {
         console.log("Group joining failed with exception:", error.code);
-        if (error.code === "ERR_ALREADY_JOINED") {
-          // update the state of the parent
-          this.props.updateState(e);
-        }
       }
     );
   }
@@ -60,7 +59,7 @@ export default class Groups extends Component {
             <ul>
               {this.state.groupList.map(a => (
                 <li key={a.guid} onClick={this.selectGroup.bind(this, a.guid)}>
-                  <div> #{a.name}</div>
+                  <div className="groupName"> #{a.name}</div>
                 </li>
               ))}
             </ul>

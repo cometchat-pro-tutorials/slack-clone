@@ -6,7 +6,7 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      group: "supergroup"
+      group: ""
     };
 
     this.updateState = this.updateState.bind(this);
@@ -15,6 +15,7 @@ export default class Dashboard extends Component {
 
   updateState(group) {
     this.self.setState({ group: group });
+    console.log(group);
   }
 
   render() {

@@ -11,11 +11,8 @@ import "./App.css";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      redirect: false
-    };
-
-  
+  //this initializes the cometchat Pro SDK. The init function must be called and must return true before
+  // you can go ahead to login a user or do any other thing with cometChat Pro
     CometChat.init(API_ID).then(
       hasInitialized => {
         console.log("Initialization completed successfully", hasInitialized);

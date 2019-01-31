@@ -1,4 +1,9 @@
-.groupIcon{
-    width:5%;
-    height:5%;
+.groupIcon {
+  width: 5%;
+  height: 5%;
+}
+
+.groupName {
+  width: 100%;
+  height: 50px;
 }
