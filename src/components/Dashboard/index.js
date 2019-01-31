@@ -13,8 +13,12 @@ export default class Dashboard extends Component {
   }
 
   updateState(group) {
-    this.setState({ group });
-    console.log("State in parent: " + this.state.group);
+    this.setState({ group: group }, () => {
+      console.log("State in parent: " + this.state.group);
+
+      console.log("group in parent: " + group);
+      return { group: group };
+    });
   }
 
   render() {

@@ -21,37 +21,51 @@ export default class Chatbox extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.update = this.update.bind(this);
+    this.self = this;
   }
 
-  componentWillReceiveProps() {
-    if (this.props.state.group) {
-      this.setState({ receiverID: this.props.state.group });
-      console.log("Component Recieved Props " + this.state.receiverID);
-      console.log("State from Props" + this.props.state.group);
+  componentDidUpdate() {
+    this.self.newstate = this.state.receiverID;
+    if (this.self.newstate !== this.props.state.group) {
+      this.setState({ receiverID: this.props.state.group }, () => {
+        console.log("new state " + this.state.receiverID);
+        return { receiverID: this.props.state.group };
+      });
     }
   }
-  componentDidMount() {
-    // this.messagesRequest = new CometChat.MessagesRequestBuilder()
-    //   .setGUID(this.state.receiverID)
-    //   .setLimit(this.limit)
-    //   .build();
-
-    // this.messagesRequest.fetchPrevious().then(
-    //   messages => {
-    //     //  this line is left here for debugging purposes
-    //     console.log("Message list fetched:", messages);
-    //     //Handle the list of messages
-    //     this.setState({ groupMessage: messages });
-    //   },
-    //   error => {
-    //     console.log("Message fetching failed with error:", error);
-    //   }
-    // );
-
-    console.log("State from child " + this.state.receiverID);
+  componentWillReceiveProps() {
+    if (this.props.state.group === this.state.receiverID) {
+      this.update();
+    } // just update the messages each time a prop is recvieved
   }
 
-  update() {}
+  componentDidMount() {
+    console.log("State from child " + this.state.receiverID);
+    this.update(); // render the message from our default group--supergroup
+  }
+
+  update() {
+    this.messagesRequest = new CometChat.MessagesRequestBuilder()
+      .setGUID(this.state.receiverID)
+      .setLimit(this.limit)
+      .build();
+
+    this.messagesRequest.fetchPrevious().then(
+      messages => {
+        //  this line is left here for debugging purposes
+        console.log("Message list fetched:", messages);
+        //Handle the list of messages
+
+        this.setState({ groupMessage: messages }, () => {
+          console.log("Group Message " + this.state.groupMessage);
+          return { groupMessage: messages };
+        });
+      },
+      error => {
+        console.log("Message fetching failed with error:", error);
+      }
+    );
+  }
 
   send() {
     this.textMessage = new CometChat.TextMessage(
@@ -67,7 +81,7 @@ export default class Chatbox extends Component {
         console.log("Message sent successfully:", message);
         // Update request new data from the api and update the state on componentDIdMount
         this.setState({ messageText: null });
-        // this.update();
+        this.update();
       },
       error => {
         console.log("Message sending failed with error:", error);
