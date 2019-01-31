@@ -40,7 +40,7 @@ export default class Chatbox extends Component {
 
     this.messagesRequest.fetchPrevious().then(
       messages => {
-      //  this line is left here for debugging purposes
+        //  this line is left here for debugging purposes
         console.log("Message list fetched:", messages);
         //Handle the list of messages
         this.setState({ groupMessage: messages });
@@ -53,15 +53,18 @@ export default class Chatbox extends Component {
 
   send() {
     this.textMessage = new CometChat.TextMessage(
-      this.props.state.group, //the group you want to render. In our case we are getting it from the parent state
+      this.props.state.group, //the group you want to send the message to. In our case we are getting it from the parent state
       this.state.messageText,
       this.messageType,
       this.receiverType
     );
+    console.log("From child component" + this.props.state.group);
+
     CometChat.sendMessage(this.textMessage).then(
       message => {
         console.log("Message sent successfully:", message);
         // Update request new data from the api and update the state on componentDIdMount
+        this.setState({ messageText: null });
         this.update();
       },
       error => {
@@ -87,7 +90,6 @@ export default class Chatbox extends Component {
         <div className="chatWindow">
           <ol className="chat">
             {this.state.groupMessage.map(data => (
-              
               <li className="self" key={data.id}>
                 <div className="msg">
                   <p>

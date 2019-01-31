@@ -33,15 +33,14 @@ export default class Groups extends Component {
     );
   }
 
-  selectGroup(e) {
-    this.GUID = e;
+  selectGroup(GUID) {
     this.password = "";
     this.groupType = CometChat.GROUP_TYPE.PUBLIC;
 
-    this.props.updateState(e);
+    this.props.updateState(GUID);
    
 
-    CometChat.joinGroup(this.GUID, this.groupType, this.password).then(
+    CometChat.joinGroup(GUID, this.groupType, this.password).then(
       group => {
         console.log("Group joined successfully:", group);
       },
