@@ -24,48 +24,50 @@ export default class Chatbox extends Component {
   }
 
   componentWillReceiveProps() {
-    this.update();
+    if (this.props.state.group) {
+      this.setState({ receiverID: this.props.state.group });
+      console.log("Component Recieved Props " + this.state.receiverID);
+      console.log("State from Props" + this.props.state.group);
+    }
   }
   componentDidMount() {
-    this.update();
+    // this.messagesRequest = new CometChat.MessagesRequestBuilder()
+    //   .setGUID(this.state.receiverID)
+    //   .setLimit(this.limit)
+    //   .build();
+
+    // this.messagesRequest.fetchPrevious().then(
+    //   messages => {
+    //     //  this line is left here for debugging purposes
+    //     console.log("Message list fetched:", messages);
+    //     //Handle the list of messages
+    //     this.setState({ groupMessage: messages });
+    //   },
+    //   error => {
+    //     console.log("Message fetching failed with error:", error);
+    //   }
+    // );
+
+    console.log("State from child " + this.state.receiverID);
   }
 
-  // this is meant to be fired each time you want to update the state with the current data from the api
-  // So it's fired each time the component mounts and also each time the component recieves props to update the chat ui.
-  update() {
-    this.messagesRequest = new CometChat.MessagesRequestBuilder()
-      .setGUID(this.props.state.group)
-      .setLimit(this.limit)
-      .build();
-
-    this.messagesRequest.fetchPrevious().then(
-      messages => {
-        //  this line is left here for debugging purposes
-        console.log("Message list fetched:", messages);
-        //Handle the list of messages
-        this.setState({ groupMessage: messages });
-      },
-      error => {
-        console.log("Message fetching failed with error:", error);
-      }
-    );
-  }
+  update() {}
 
   send() {
     this.textMessage = new CometChat.TextMessage(
-      this.props.state.group, //the group you want to send the message to. In our case we are getting it from the parent state
+      this.state.receiverID, //the group you want to send the message to. In our case we are getting it from the parent state
       this.state.messageText,
       this.messageType,
       this.receiverType
     );
-    console.log("From child component" + this.props.state.group);
+    console.log("From child component" + this.state.receiverID);
 
     CometChat.sendMessage(this.textMessage).then(
       message => {
         console.log("Message sent successfully:", message);
         // Update request new data from the api and update the state on componentDIdMount
         this.setState({ messageText: null });
-        this.update();
+        // this.update();
       },
       error => {
         console.log("Message sending failed with error:", error);

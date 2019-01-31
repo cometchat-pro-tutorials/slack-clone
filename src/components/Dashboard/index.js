@@ -6,16 +6,15 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      group: null
+      group: "supergroup"
     };
 
     this.updateState = this.updateState.bind(this);
-    this.self = this;
   }
 
   updateState(group) {
-    this.self.setState({ group: group });
-    console.log("From parent component" + this.state.group);
+    this.setState({ group });
+    console.log("State in parent: " + this.state.group);
   }
 
   render() {

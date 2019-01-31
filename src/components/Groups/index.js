@@ -8,10 +8,6 @@ export default class Groups extends Component {
     super(props);
     this.limit = 30;
 
-    this.groupsRequest = new CometChat.GroupsRequestBuilder()
-      .setLimit(this.limit)
-      .build();
-
     this.state = {
       groupList: [],
       activeGroup: ""
@@ -19,7 +15,10 @@ export default class Groups extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.props);
+    this.groupsRequest = new CometChat.GroupsRequestBuilder()
+      .setLimit(this.limit)
+      .build();
+
     this.groupsRequest.fetchNext().then(
       groupList => {
         /* groupList will be the list of Group class */
@@ -36,10 +35,7 @@ export default class Groups extends Component {
   selectGroup(GUID) {
     this.password = "";
     this.groupType = CometChat.GROUP_TYPE.PUBLIC;
-
     this.props.updateState(GUID);
-   
-
     CometChat.joinGroup(GUID, this.groupType, this.password).then(
       group => {
         console.log("Group joined successfully:", group);
@@ -56,9 +52,12 @@ export default class Groups extends Component {
         <div className="group">
           <div className="groupList">
             <ul>
-              {this.state.groupList.map(a => (
-                <li key={a.guid} onClick={this.selectGroup.bind(this, a.guid)}>
-                  <div className="groupName"> #{a.name}</div>
+              {this.state.groupList.map(groups => (
+                <li
+                  key={groups.guid}
+                  onClick={this.selectGroup.bind(this, groups.guid)}
+                >
+                  <div className="groupName"> # {groups.name}</div>
                 </li>
               ))}
             </ul>
