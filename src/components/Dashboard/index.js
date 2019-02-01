@@ -13,6 +13,7 @@ export default class Dashboard extends Component {
     this.updateState = this.updateState.bind(this);
   }
 
+  // recieve event from props and update the state with the data
   updateState(group) {
     this.setState({ group: group }, () => {
       console.log("State in parent: " + this.state.group);

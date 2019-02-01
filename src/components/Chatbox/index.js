@@ -10,7 +10,8 @@ export default class Chatbox extends Component {
     this.state = {
       receiverID: this.props.state.group,
       messageText: null,
-      groupMessage: []
+      groupMessage: [],
+      user: {}
     };
 
     this.receiverID = this.state.receiverID;
@@ -21,6 +22,7 @@ export default class Chatbox extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.update = this.update.bind(this);
+    this.getUser = this.getUser.bind(this);
     this.self = this;
   }
 
@@ -38,15 +40,18 @@ export default class Chatbox extends Component {
 
   componentDidMount() {
     console.log("State from child " + this.state.receiverID);
-    // this.update(); // render the message from our default group--supergroup
+    this.getUser();
+    console.log("Hey :" + this.state.user.uid);
   }
 
+  // get the latest messages for the current group
   update() {
     this.messagesRequest = new CometChat.MessagesRequestBuilder()
       .setGUID(this.props.state.group)
       .setLimit(this.limit)
       .build();
-
+    console.log("Hey :" + this.state.user.uid);
+    console.log(this.getUser()); // get current user
     this.messagesRequest.fetchPrevious().then(
       messages => {
         //  this line is left here for debugging purposes
@@ -66,6 +71,7 @@ export default class Chatbox extends Component {
     );
   }
 
+  //Send message
   send() {
     this.textMessage = new CometChat.TextMessage(
       this.state.receiverID, //the group you want to send the message to. In our case we are getting it from the parent state
@@ -95,8 +101,27 @@ export default class Chatbox extends Component {
     e.target.reset();
   }
 
+  //get the chat message from the text box and update the state with the new value
   handleChange(e) {
     this.setState({ messageText: e.target.value });
+  }
+
+  // Get the current logged in user
+
+  getUser() {
+    CometChat.getLoggedinUser().then(
+      user => {
+        console.log("user details:", { user });
+        this.setState({ user: user }, () => {
+          return { user: user };
+        });
+        return { user };
+      },
+      error => {
+        console.log("error getting details:", { error });
+        return false;
+      }
+    );
   }
 
   render() {
@@ -105,16 +130,29 @@ export default class Chatbox extends Component {
         <div className="chatWindow">
           <ol className="chat">
             {this.state.groupMessage.map(data => (
-              <li className="self" key={data.id}>
-                <div className="msg">
-                  <p>
-                    {data.sender.uid} <time> {data.time}</time>
-                  </p>
-                  <div className="message"> {data.data.text}</div>
-                </div>
-              </li>
+              <div>
+                {/* Render loggedin user chat at the right side of the page */}
+
+                {this.state.user.uid === data.sender.uid ? (
+                  <li className="self" key={data.id}>
+                    <div className="msg">
+                      <p>{data.sender.uid}</p>
+                      <div className="message"> {data.data.text}</div>
+                    </div>
+                  </li>
+                ) : (
+                  // render loggedin users chat at the left side of the chatwindow
+                  <li class="other" key={data.id}>
+                    <div class="msg">
+                      <p>{data.sender.uid}</p>
+                      <div className="message"> {data.data.text}</div>
+                    </div>
+                  </li>
+                )}
+              </div>
             ))}
           </ol>
+          {/* check if a group has been selected */}
           {this.props.state.startChatStatus ? (
             <div className="chatInputWrapper">
               <form onSubmit={this.handleSubmit}>
