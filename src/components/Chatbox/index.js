@@ -50,8 +50,10 @@ export default class Chatbox extends Component {
       .setGUID(this.props.state.group)
       .setLimit(this.limit)
       .build();
-    console.log("Hey :" + this.state.user.uid);
-    console.log(this.getUser()); // get current user
+
+    this.scrollToBottom();
+
+    console.log(this.getUser()); // get current user : debugging
     this.messagesRequest.fetchPrevious().then(
       messages => {
         //  this line is left here for debugging purposes
@@ -93,6 +95,11 @@ export default class Chatbox extends Component {
         // Handle any error
       }
     );
+  }
+
+  scrollToBottom() {
+    const chat = document.querySelectorAll(".chat")[0];
+    chat.scrollTop = chat.scrollHeight;
   }
 
   handleSubmit(e) {
