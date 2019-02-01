@@ -29,13 +29,12 @@ export default class Chatbox extends Component {
     if (this.self.newstate !== this.props.state.group) {
       this.setState({ receiverID: this.props.state.group }, () => {
         console.log("new state " + this.state.receiverID);
+        this.update();
         return { receiverID: this.props.state.group };
       });
+    } else {
     }
   }
-  // componentWillReceiveProps() {
-  //     this.update(); // just update the messages each time a prop is recvieved
-  // }
 
   componentDidMount() {
     console.log("State from child " + this.state.receiverID);
@@ -44,7 +43,7 @@ export default class Chatbox extends Component {
 
   update() {
     this.messagesRequest = new CometChat.MessagesRequestBuilder()
-      .setGUID(this.state.receiverID)
+      .setGUID(this.props.state.group)
       .setLimit(this.limit)
       .build();
 
@@ -54,6 +53,9 @@ export default class Chatbox extends Component {
         console.log("Message list fetched:", messages);
         //Handle the list of messages
 
+        this.setState({ groupMessage: [] }, () => {
+          return { groupMessage: [] };
+        });
         this.setState({ groupMessage: messages }, () => {
           return { groupMessage: messages };
         });
@@ -113,18 +115,22 @@ export default class Chatbox extends Component {
               </li>
             ))}
           </ol>
-          <div className="chatInputWrapper">
-            <form onSubmit={this.handleSubmit}>
-              <input
-                className="textarea input"
-                type="text"
-                placeholder="Type a message..."
-                onChange={this.handleChange}
-              />
-            </form>
+          {this.props.state.startChatStatus ? (
+            <div className="chatInputWrapper">
+              <form onSubmit={this.handleSubmit}>
+                <input
+                  className="textarea input"
+                  type="text"
+                  placeholder="Type a message..."
+                  onChange={this.handleChange}
+                />
+              </form>
 
-            <div className="emojis" />
-          </div>
+              <div className="emojis" />
+            </div>
+          ) : (
+            "Please, choose a group to start cheatting..."
+          )}
         </div>
       </React.Fragment>
     );
