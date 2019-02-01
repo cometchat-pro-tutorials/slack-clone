@@ -33,15 +33,13 @@ export default class Chatbox extends Component {
       });
     }
   }
-  componentWillReceiveProps() {
-    if (this.props.state.group === this.state.receiverID) {
-      this.update();
-    } // just update the messages each time a prop is recvieved
-  }
+  // componentWillReceiveProps() {
+  //     this.update(); // just update the messages each time a prop is recvieved
+  // }
 
   componentDidMount() {
     console.log("State from child " + this.state.receiverID);
-    this.update(); // render the message from our default group--supergroup
+    // this.update(); // render the message from our default group--supergroup
   }
 
   update() {
@@ -57,7 +55,6 @@ export default class Chatbox extends Component {
         //Handle the list of messages
 
         this.setState({ groupMessage: messages }, () => {
-          console.log("Group Message " + this.state.groupMessage);
           return { groupMessage: messages };
         });
       },
