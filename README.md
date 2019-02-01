@@ -73,7 +73,6 @@ Please Check **package.json** file for the dependency list.
 
 This chat app was built with create-react-app boiler plate.
 
-> To know more about Webpack, visit Webpack official documentation : [HERE](https://webpack.js.org/concepts/)
 
 Please change `appId` and `apiKey` in _src/settings.js_ to the provided credentials.
 
