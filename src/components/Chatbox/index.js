@@ -23,6 +23,7 @@ export default class Chatbox extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.update = this.update.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.getMessageDate = this.getMessageDate.bind(this);
     this.self = this;
   }
 
@@ -39,9 +40,7 @@ export default class Chatbox extends Component {
   }
 
   componentDidMount() {
-    console.log("State from child " + this.state.receiverID);
     this.getUser();
-    console.log("Hey :" + this.state.user.uid);
   }
 
   // get the latest messages for the current group
@@ -152,7 +151,8 @@ export default class Chatbox extends Component {
                   <li class="other" key={data.id}>
                     <div class="msg">
                       <p>{data.sender.uid}</p>
-                      <div className="message"> {data.data.text}</div>
+
+                      <div className="message"> {data.data.text} </div>
                     </div>
                   </li>
                 )}

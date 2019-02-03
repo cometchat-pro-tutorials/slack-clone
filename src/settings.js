@@ -1,4 +1,4 @@
-const API_ID = "1731df38943aa";
-const API_KEY = "fe85ac3a09436d3305d82dff5515a2064c4b6716";
+const API_ID = "{api_ID}";
+const API_KEY = "{api_KEY}";
 
 export { API_ID, API_KEY };
