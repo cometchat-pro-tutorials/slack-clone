@@ -26,12 +26,13 @@ It's a **group** messaging tutorial app. The app enables users to join chat grou
 
 ## Screenshots
 
-![alt text](login.png "Logo Title Text 1")
+![alt text](screenshots/login.png "Logo Title Text 1")
 
 <p align ="center"> Fig : Login page embedded in Website </p>
 <br>
 
-![alt text](react-chat-app.png "Logo Title Text 1")
+![alt text](screenshots/react-chat-app.png "Logo Title Text 1")
+
 <p align ="center"> Fig : Chat Application embedded in Website </p>
 <br></br>
 
@@ -73,10 +74,9 @@ Please Check **package.json** file for the dependency list.
 
 This chat app was built with create-react-app boiler plate.
 
-
 Please change `appId` and `apiKey` in _src/settings.js_ to the provided credentials.
 
-![Studio Guide](studio.png "Logo Title Text 1")
+![Studio Guide](screenshots/studio.png "Logo Title Text 1")
 
 <br></br>
 

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { CometChat } from "@cometchat-pro/chat";
 import "./index.css";
-// import Groups from "../Groups";
 
 export default class Chatbox extends Component {
   constructor(props) {
@@ -23,15 +22,12 @@ export default class Chatbox extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.update = this.update.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.getMessageDate = this.getMessageDate.bind(this);
-    this.self = this;
   }
 
   componentDidUpdate() {
-    this.self.newstate = this.state.receiverID;
-    if (this.self.newstate !== this.props.state.group) {
+    this.newstate = this.state.receiverID;
+    if (this.newstate !== this.props.state.group) {
       this.setState({ receiverID: this.props.state.group }, () => {
-        console.log("new state " + this.state.receiverID);
         this.update();
         return { receiverID: this.props.state.group };
       });
@@ -43,7 +39,6 @@ export default class Chatbox extends Component {
     this.getUser();
   }
 
-  // get the latest messages for the current group
   update() {
     this.messagesRequest = new CometChat.MessagesRequestBuilder()
       .setGUID(this.props.state.group)
@@ -52,13 +47,8 @@ export default class Chatbox extends Component {
 
     this.scrollToBottom();
 
-    console.log(this.getUser()); // get current user : debugging
     this.messagesRequest.fetchPrevious().then(
       messages => {
-        //  this line is left here for debugging purposes
-        console.log("Message list fetched:", messages);
-        //Handle the list of messages
-
         this.setState({ groupMessage: [] }, () => {
           return { groupMessage: [] };
         });
@@ -72,26 +62,22 @@ export default class Chatbox extends Component {
     );
   }
 
-  //Send message
   send() {
     this.textMessage = new CometChat.TextMessage(
-      this.state.receiverID, //the group you want to send the message to. In our case we are getting it from the parent state
+      this.state.receiverID,
       this.state.messageText,
       this.messageType,
       this.receiverType
     );
-    console.log("From child component" + this.state.receiverID);
 
     CometChat.sendMessage(this.textMessage).then(
       message => {
         console.log("Message sent successfully:", message);
-        // Update request new data from the api and update the state on componentDIdMount
         this.setState({ messageText: null });
         this.update();
       },
       error => {
         console.log("Message sending failed with error:", error);
-        // Handle any error
       }
     );
   }
