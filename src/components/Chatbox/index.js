@@ -7,29 +7,28 @@ export default class Chatbox extends Component {
     super(props);
 
     this.state = {
-      receiverID: this.props.state.group,
+      receiverID: this.props.state.channelUID,
       messageText: null,
-      groupMessage: [],
+      channelMessages: [],
       user: {}
     };
 
     this.receiverID = this.state.receiverID;
     this.messageType = CometChat.MESSAGE_TYPE.TEXT;
     this.receiverType = CometChat.RECEIVER_TYPE.GROUP;
-    this.limit = 30;
+    this.messagesLimit = 30;
     this.send = this.send.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.update = this.update.bind(this);
+    this.handleMessageInput = this.handleMessageInput.bind(this);
+    this.fetchNewMessages = this.fetchNewMessages.bind(this);
     this.getUser = this.getUser.bind(this);
   }
 
   componentDidUpdate() {
-    this.newstate = this.state.receiverID;
-    if (this.newstate !== this.props.state.group) {
-      this.setState({ receiverID: this.props.state.group }, () => {
-        this.update();
-        return { receiverID: this.props.state.group };
+    if (this.state.receiverID !== this.props.state.channelUID) {
+      this.setState({ receiverID: this.props.state.channelUID }, () => {
+        this.fetchNewMessages();
+        return { receiverID: this.props.state.channelUID };
       });
     } else {
     }
@@ -39,21 +38,21 @@ export default class Chatbox extends Component {
     this.getUser();
   }
 
-  update() {
+  fetchNewMessages() {
     this.messagesRequest = new CometChat.MessagesRequestBuilder()
-      .setGUID(this.props.state.group)
-      .setLimit(this.limit)
+      .setGUID(this.props.state.channelUID)
+      .setLimit(this.messagesLimit)
       .build();
 
     this.scrollToBottom();
 
     this.messagesRequest.fetchPrevious().then(
       messages => {
-        this.setState({ groupMessage: [] }, () => {
-          return { groupMessage: [] };
+        this.setState({ channelMessages: [] }, () => {
+          return { channelMessages: [] };
         });
-        this.setState({ groupMessage: messages }, () => {
-          return { groupMessage: messages };
+        this.setState({ channelMessages: messages }, () => {
+          return { channelMessages: messages };
         });
       },
       error => {
@@ -73,13 +72,14 @@ export default class Chatbox extends Component {
     CometChat.sendMessage(this.textMessage).then(
       message => {
         console.log("Message sent successfully:", message);
-        this.setState({ messageText: null });
-        this.update();
+        this.fetchNewMessages();
       },
       error => {
         console.log("Message sending failed with error:", error);
       }
     );
+
+    
   }
 
   scrollToBottom() {
@@ -93,8 +93,7 @@ export default class Chatbox extends Component {
     e.target.reset();
   }
 
-  //get the chat message from the text box and update the state with the new value
-  handleChange(e) {
+  handleMessageInput(e) {
     this.setState({ messageText: e.target.value });
   }
 
@@ -116,52 +115,57 @@ export default class Chatbox extends Component {
     );
   }
 
+  renderMessages() {
+    return this.state.channelMessages.map(data => (
+      <div>
+        {/* Render loggedin user chat at the right side of the page */}
+
+        {this.state.user.uid === data.sender.uid ? (
+          <li className="self" key={data.id}>
+            <div className="msg">
+              <p>{data.sender.uid}</p>
+              <div className="message"> {data.data.text}</div>
+            </div>
+          </li>
+        ) : (
+          // render loggedin users chat at the left side of the chatwindow
+          <li className="other" key={data.id}>
+            <div className="msg">
+              <p>{data.sender.uid}</p>
+
+              <div className="message"> {data.data.text} </div>
+            </div>
+          </li>
+        )}
+      </div>
+    ));
+  }
+
+  renderChatInputBox() {
+    return this.props.state.isShowMessages ? (
+      <div className="chatInputWrapper">
+        <form onSubmit={this.handleSubmit}>
+          <input
+            className="textarea input"
+            type="text"
+            placeholder="Type a message..."
+            onChange={this.handleMessageInput}
+          />
+        </form>
+
+        <div className="emojis" />
+      </div>
+    ) : (
+      "Choose a channel to start chatting"
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
         <div className="chatWindow">
-          <ol className="chat">
-            {this.state.groupMessage.map(data => (
-              <div>
-                {/* Render loggedin user chat at the right side of the page */}
-
-                {this.state.user.uid === data.sender.uid ? (
-                  <li className="self" key={data.id}>
-                    <div className="msg">
-                      <p>{data.sender.uid}</p>
-                      <div className="message"> {data.data.text}</div>
-                    </div>
-                  </li>
-                ) : (
-                  // render loggedin users chat at the left side of the chatwindow
-                  <li class="other" key={data.id}>
-                    <div class="msg">
-                      <p>{data.sender.uid}</p>
-
-                      <div className="message"> {data.data.text} </div>
-                    </div>
-                  </li>
-                )}
-              </div>
-            ))}
-          </ol>
-          {/* check if a group has been selected */}
-          {this.props.state.startChatStatus ? (
-            <div className="chatInputWrapper">
-              <form onSubmit={this.handleSubmit}>
-                <input
-                  className="textarea input"
-                  type="text"
-                  placeholder="Type a message..."
-                  onChange={this.handleChange}
-                />
-              </form>
-
-              <div className="emojis" />
-            </div>
-          ) : (
-            "Please, choose a group to start cheatting..."
-          )}
+          <ol className="chat">{this.renderMessages()}</ol>
+          {this.renderChatInputBox()}
         </div>
       </React.Fragment>
     );

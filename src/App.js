@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import { API_ID } from "./settings.js";
+import { API_ID } from "./config.js";
 import { CometChat } from "@cometchat-pro/chat";
-import Chatbox from "./components/Chatbox";
-import ChatHome from "./components/Dashboard";
 import Login from "./components/Login";
-import CreateGroup from "./components/CreateGroup";
+import CreateChannel from "./components/CreateChannel";
 import "./App.css";
+import Dashboard from "./components/Dashboard";
 
 class App extends Component {
   constructor(props) {
@@ -28,9 +27,8 @@ class App extends Component {
         <div className="container">
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route path="/chat" component={Chatbox} />
-            <Route path="/dashboard" component={ChatHome} />
-            <Route path="/creategroup" component={CreateGroup} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/createchannel" component={CreateChannel} />
           </Switch>
         </div>
       </React.Fragment>

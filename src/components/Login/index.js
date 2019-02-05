@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { CometChat } from "@cometchat-pro/chat";
-import { API_KEY } from "../../settings";
+import { API_KEY } from "../../config.js";
 import "./index.css";
 import Loading from "./loading.svg";
 
 export default class Login extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
-    this.isLoggedIn = this.isLoggedIn.bind(this);
+    this.login = this.login.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.handleUserInput = this.handleUserInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       redirect: false,
@@ -22,13 +22,13 @@ export default class Login extends Component {
     };
   }
 
-  onSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
-    this.isLoggedIn();
-    this.setState({ isLoading: true, error:"" });
+    this.login();
+    this.setState({ isLoading: true, error: "" });
   }
 
-  handleChange(e) {
+  handleUserInput(e) {
     this.setState({ userName: e.target.value.toUpperCase() });
   }
 
@@ -36,10 +36,13 @@ export default class Login extends Component {
     return <Redirect to="/dashboard" />;
   };
 
-  isLoggedIn() {
+  login() {
+    // Becareful of exposing your API key here.
+    // It can be dangerous if it gets to the hands of unauthorize users
+
     CometChat.login(this.state.userName, API_KEY).then(
-      User => {
-        console.log("Login Successful:", { User });
+      user => {
+        console.log("Login Successful:", { user });
         this.setState({ redirect: true });
       },
       error => {
@@ -56,18 +59,18 @@ export default class Login extends Component {
     return (
       <React.Fragment>
         <div className="login">
-          <h3>Welcome to Your React Chat App | Log in to start chatting</h3>
+          <h4>Welcome to Your React Chat App</h4>
           {!this.state.redirect ? "" : this.renderRedirect()}
           <div>
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.handleSubmit}>
               <div>
                 <input
                   className="groupname"
                   placeholder="Enter Your Username"
-                  onChange={this.handleChange}
+                  onChange={this.handleUserInput}
                 />
               </div>
-              <button className="button modalbutton">Login</button>
+              <button className="button modal-button">Login</button>
             </form>
             <div className="error">{this.state.error}</div>
             <div>
@@ -79,6 +82,19 @@ export default class Login extends Component {
                 ""
               )}
             </div>
+          </div>
+          <div className="signup-text">
+            <p>Need an account?</p>
+            <p>
+              Create one from the{" "}
+              <a href="https://app.cometchat.com/" target="blank">
+                CometChat Pro dashboard
+              </a>
+            </p>
+            <p>
+              or use one of our test usernames: superhero1, superhero2,
+              superhero3 to login
+            </p>
           </div>
         </div>
       </React.Fragment>

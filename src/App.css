@@ -102,9 +102,6 @@ body {
   grid-row-end: 190;
 }
 
-.chatInputWrapper > input {
-}
-
 .groupList {
   display: grid;
   color: white;
@@ -171,11 +168,11 @@ body {
   margin-bottom: 10px;
   -moz-user-focus: initial;
 }
-.modalbutton {
+.modal-button {
   background: rgb(211, 25, 0);
 }
 
-.modalbutton:after {
+.modal-button:after {
   content: "";
   width: 0;
   height: 0;

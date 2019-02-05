@@ -6,42 +6,42 @@ import "./index.css";
 export default class Groups extends Component {
   constructor(props) {
     super(props);
-    this.limit = 30;
+    this.channelsLimit = 30;
 
     this.state = {
-      groupList: [],
-      activeGroup: ""
+      channels: [],
+      isChannelActive: ""
     };
   }
 
   componentDidMount() {
     this.groupsRequest = new CometChat.GroupsRequestBuilder()
-      .setLimit(this.limit)
+      .setLimit(this.channelsLimit)
       .build();
 
     this.groupsRequest.fetchNext().then(
-      groupList => {
+      channels => {
         /* groupList will be the list of Group class */
-        console.log("Groups list fetched successfully", groupList);
-        this.setState({ groupList });
+        console.log("Channels list fetched successfully", channels);
+        this.setState({ channels });
         /* you can display the list of groups available using groupList */
       },
       error => {
-        console.log("Groups list fetching failed with error", error);
+        console.log("channels list fetching failed with error", error);
       }
     );
   }
 
-  selectGroup(GUID) {
+  selectGroup(channelsID) {
     this.password = "";
     this.groupType = CometChat.GROUP_TYPE.PUBLIC;
-    this.props.updateState(GUID);
-    CometChat.joinGroup(GUID, this.groupType, this.password).then(
-      group => {
-        console.log("Group joined successfully:", group);
+    this.props.updateState(channelsID);
+    CometChat.joinGroup(channelsID, this.groupType, this.password).then(
+      channel => {
+        console.log(" Joined channels successfully:", channel);
       },
       error => {
-        console.log("Group joining failed with exception:", error.code);
+        console.log("Failed joining a channel with exception:", error.code);
       }
     );
   }
@@ -52,20 +52,20 @@ export default class Groups extends Component {
         <div className="group">
           <div className="groupList">
             <ul>
-              {this.state.groupList.map(groups => (
+              {this.state.channels.map(channels => (
                 <li
-                  key={groups.guid}
-                  onClick={this.selectGroup.bind(this, groups.guid)}
+                  key={channels.guid}
+                  onClick={this.selectGroup.bind(this, channels.guid)}
                 >
-                  <div className="groupName"> # {groups.name}</div>
+                  <div className="groupName"> # {channels.name}</div>
                 </li>
               ))}
             </ul>
           </div>
           <div className="createGroup">
             <button className="createGroupBtn button">
-              <Link className="a" to="/creategroup">
-                Create Group
+              <Link className="a" to="/createchannel">
+                Create A Channel
               </Link>
             </button>
           </div>

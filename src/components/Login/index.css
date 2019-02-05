@@ -1,7 +1,8 @@
-h3 {
+.login > h4 {
   color: #529cca;
   text-align: center;
-  margin: 0 auto;
+  margin: 20 auto;
+  
 }
 
 .groupname {
@@ -25,4 +26,8 @@ h3 {
   width: 400px;
   margin-left: 400px;
   margin-top: 200px;
+}
+
+.signup-text {
+  font-size: 10px;
 }
