@@ -38,21 +38,9 @@ export default class Groups extends Component {
 
     this.props.updateState(channelID);
 
-    CometChat.getGroup(channelID).then(
-      group => {
-        console.log("Group details fetched successfully:", group);
-      },
-      error => {
-        console.log("Group details fetching failed with exception:", error);
-      }
-    );
-
     CometChat.joinGroup(channelID, this.groupType, this.password).then(
       channel => {
         console.log(" Joined channels successfully:", channel);
-      },
-      error => {
-        console.log("Failed joining a channel with exception:", error.code);
       }
     );
   }
