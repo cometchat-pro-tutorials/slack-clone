@@ -41,6 +41,9 @@ export default class Groups extends Component {
     CometChat.joinGroup(channelID, this.groupType, this.password).then(
       channel => {
         console.log(" Joined channels successfully:", channel);
+      },
+      error => {
+        console.log("You are already a member of this group");
       }
     );
   }

@@ -28,8 +28,8 @@ export default class Chatbox extends Component {
   componentDidUpdate() {
     if (this.state.receiverID !== this.props.state.channelUID) {
       this.setState({ receiverID: this.props.state.channelUID }, () => {
-        this.fetchNewMessages();
         this.newMessageListener();
+        this.fetchNewMessages();
         return { receiverID: this.props.state.channelUID };
       });
     } else {
@@ -123,7 +123,6 @@ export default class Chatbox extends Component {
       new CometChat.MessageListener({
         onTextMessageReceived: textMessage => {
           console.log("Text message successfully", textMessage);
-
           this.fetchNewMessages();
         }
       })
