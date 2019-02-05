@@ -22,12 +22,14 @@ export default class Chatbox extends Component {
     this.handleMessageInput = this.handleMessageInput.bind(this);
     this.fetchNewMessages = this.fetchNewMessages.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.newMessageListener = this.newMessageListener.bind(this);
   }
 
   componentDidUpdate() {
     if (this.state.receiverID !== this.props.state.channelUID) {
       this.setState({ receiverID: this.props.state.channelUID }, () => {
         this.fetchNewMessages();
+        this.newMessageListener();
         return { receiverID: this.props.state.channelUID };
       });
     } else {
@@ -78,8 +80,6 @@ export default class Chatbox extends Component {
         console.log("Message sending failed with error:", error);
       }
     );
-
-    
   }
 
   scrollToBottom() {
@@ -112,6 +112,21 @@ export default class Chatbox extends Component {
         console.log("error getting details:", { error });
         return false;
       }
+    );
+  }
+
+  newMessageListener() {
+    this.listenerID = "groupMessage";
+
+    CometChat.addMessageListener(
+      this.listenerID,
+      new CometChat.MessageListener({
+        onTextMessageReceived: textMessage => {
+          console.log("Text message successfully", textMessage);
+
+          this.fetchNewMessages();
+        }
+      })
     );
   }
 
