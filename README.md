@@ -74,7 +74,7 @@ Please Check **package.json** file for the dependency list.
 
 This chat app was built with create-react-app boiler plate.
 
-Please change `appId` and `apiKey` in _src/settings.js_ to the provided credentials.
+Please change `appId` and `apiKey` in _src/config.js_ to the provided credentials.
 
 ![Studio Guide](screenshots/studio.png "Logo Title Text 1")
 
