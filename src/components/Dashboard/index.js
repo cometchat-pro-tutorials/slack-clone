@@ -15,14 +15,9 @@ export default class Dashboard extends Component {
 
   // recieve event from props and update the state with the data
   updateState(channel) {
-    this.setState({ channelUID: channel }, () => {
-      console.log("State in parent: " + this.state.channelUID);
-
-      console.log("channel in parent: " + channel);
-      return { channelUID: channel };
+    this.setState({ channelUID: channel, isShowMessages: true }, () => {
+      return { channelUID: channel, isShowMessages: true };
     });
-
-    this.setState({ isShowMessages: true });
   }
 
   render() {

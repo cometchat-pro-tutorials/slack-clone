@@ -38,7 +38,7 @@ export default class Login extends Component {
 
   login() {
     // Becareful of exposing your API key here.
-    // It can be dangerous if it gets to the hands of unauthorize users
+    // It can be dangerous if it gets into the hands of unauthorize users
 
     CometChat.login(this.state.userName, API_KEY).then(
       user => {

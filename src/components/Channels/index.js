@@ -22,9 +22,7 @@ export default class Groups extends Component {
     this.groupsRequest.fetchNext().then(
       channels => {
         /* groupList will be the list of Group class */
-        console.log("Channels list fetched successfully", channels);
         this.setState({ channels });
-        /* you can display the list of groups available using groupList */
       },
       error => {
         console.log("channels list fetching failed with error", error);

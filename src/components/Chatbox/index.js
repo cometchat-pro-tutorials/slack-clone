@@ -26,18 +26,21 @@ export default class Chatbox extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.receiverID !== this.props.state.channelUID) {
-      this.setState({ receiverID: this.props.state.channelUID }, () => {
-        this.newMessageListener();
-        this.fetchNewMessages();
-        return { receiverID: this.props.state.channelUID };
-      });
-    } else {
+    if (this.props.state.channelUID !== this.state.receiverID) {
+      this.fetchNewMessages();
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.recieverID === this.props.state.channelUID) {
+      return false;
+    }
+    return true;
   }
 
   componentDidMount() {
     this.getUser();
+    this.newMessageListener();
   }
 
   fetchNewMessages() {
@@ -46,16 +49,21 @@ export default class Chatbox extends Component {
       .setLimit(this.messagesLimit)
       .build();
 
-    this.scrollToBottom();
-
     this.messagesRequest.fetchPrevious().then(
       messages => {
-        this.setState({ channelMessages: [] }, () => {
-          return { channelMessages: [] };
-        });
-        this.setState({ channelMessages: messages }, () => {
-          return { channelMessages: messages };
-        });
+        this.setState(
+          {
+            channelMessages: messages,
+            receiverID: this.props.state.channelUID
+          },
+          () => {
+            return {
+              channelMessages: messages,
+              receiverID: this.props.state.channelUID
+            };
+          }
+        );
+        this.scrollToBottom();
       },
       error => {
         console.log("Message fetching failed with error:", error);
@@ -64,17 +72,16 @@ export default class Chatbox extends Component {
   }
 
   send() {
-    this.textMessage = new CometChat.TextMessage(
+    let textMessage = new CometChat.TextMessage(
       this.state.receiverID,
       this.state.messageText,
       this.messageType,
       this.receiverType
     );
 
-    CometChat.sendMessage(this.textMessage).then(
+    CometChat.sendMessage(textMessage).then(
       message => {
         console.log("Message sent successfully:", message);
-        this.fetchNewMessages();
       },
       error => {
         console.log("Message sending failed with error:", error);
@@ -102,7 +109,6 @@ export default class Chatbox extends Component {
   getUser() {
     CometChat.getLoggedinUser().then(
       user => {
-        console.log("user details:", { user });
         this.setState({ user: user }, () => {
           return { user: user };
         });
@@ -117,42 +123,44 @@ export default class Chatbox extends Component {
 
   newMessageListener() {
     this.listenerID = "groupMessage";
-
     CometChat.addMessageListener(
       this.listenerID,
       new CometChat.MessageListener({
         onTextMessageReceived: textMessage => {
-          console.log("Text message successfully", textMessage);
-          this.fetchNewMessages();
+          this.setState(({ channelMessages }) => {
+            return { channelMessages: [...channelMessages, textMessage] };
+          });
         }
       })
     );
   }
 
   renderMessages() {
-    return this.state.channelMessages.map(data => (
-      <div>
-        {/* Render loggedin user chat at the right side of the page */}
+    return this.props.state.isShowMessages
+      ? this.state.channelMessages.map(data => (
+          <div>
+            {/* Render loggedin user chat at the right side of the page */}
 
-        {this.state.user.uid === data.sender.uid ? (
-          <li className="self" key={data.id}>
-            <div className="msg">
-              <p>{data.sender.uid}</p>
-              <div className="message"> {data.data.text}</div>
-            </div>
-          </li>
-        ) : (
-          // render loggedin users chat at the left side of the chatwindow
-          <li className="other" key={data.id}>
-            <div className="msg">
-              <p>{data.sender.uid}</p>
+            {this.state.user.uid === data.sender.uid ? (
+              <li className="self" key={data.id}>
+                <div className="msg">
+                  <p>{data.sender.uid}</p>
+                  <div className="message"> {data.data.text}</div>
+                </div>
+              </li>
+            ) : (
+              // render loggedin users chat at the left side of the chatwindow
+              <li className="other" key={data.id}>
+                <div className="msg">
+                  <p>{data.sender.uid}</p>
 
-              <div className="message"> {data.data.text} </div>
-            </div>
-          </li>
-        )}
-      </div>
-    ));
+                  <div className="message"> {data.data.text} </div>
+                </div>
+              </li>
+            )}
+          </div>
+        ))
+      : "";
   }
 
   renderChatInputBox() {
@@ -170,7 +178,7 @@ export default class Chatbox extends Component {
         <div className="emojis" />
       </div>
     ) : (
-      "Choose a channel to start chatting"
+      ""
     );
   }
 
