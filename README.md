@@ -1,99 +1,45 @@
-# React-Chat-App-with-CometChat Pro
+# Build a modern Android chat app with Kotlin
 
-<div style="width:100%">
-	<div style="width:50%; display:inline-block">
-		<p align="center">
-		<img align="center" width="180" height="180" alt="" src="https://github.com/cometchat-pro/ios-swift-chat-app/blob/master/Screenshots/CometChat%20Logo.png">	
-		</p>	
-	</div>	
-</div>
+Read the full tutorial here:
 
-Javascript Reactjs Tutorial Group Chat app (built using **CometChat Pro**).
+[**>> Build a Slack-like Chat Application with React**](https://paper.dropbox.com/doc/Build-a-Slack-like-Chat-Application-with-React--AXxbIL36hpeuN6nriJkQjY2XAg-tzBR56afFoHKvCKeOIYVm)
 
-It's a **group** messaging tutorial app. The app enables users to join chat groups and send **messages** to the groups they join as **text**.
-
-## Table of Contents
-
-1. [Screenshots](#Screenshots)
-
-1. [Config Development Environment](#Config-your-Development-Environment)
-
-1. [Config Chat App](#Config-Chat-App)
-
-1. [Run the Sample](#Run-the-Demo-App)
-
-1. [Contributing](#Contributing)
-
-## Screenshots
+This demo app shows how to build a group group chat app with React:
 
 ![alt text](screenshots/login.png "Logo Title Text 1")
-
-<p align ="center"> Fig : Login page embedded in Website </p>
-<br>
-
 ![alt text](screenshots/react-chat-app.png "Logo Title Text 1")
 
-<p align ="center"> Fig : Chat Application embedded in Website </p>
-<br></br>
 
-## Config Development Environment
+## Running the demo
 
-Setup your development environment for **Reactjs** Sample.
+To run the demo follow these steps:
 
-If you don't have node install, Please download appropriate version from official website: [Nodejs.org](https://nodejs.org/)
+1. [Create a CometChat account](https://app.cometchat.com) if you haven't already
+2. From the [dashboard](https://app.cometchat.com/#/apps), create a new app called "React Group Chat"
+3. One created, click **Explore**
+4. Go to the **API Keys** tab and click **Create API Key**
+5. Create an API key called "React Group Chat Key" with **Auth Only** scope
+4. Download the repository [here](https://github.com/bookercodes/slack-clone/archive/master.zip) or by running `https://github.com/bookercodes/slack-clone.git`
+5. Run `npm install`
+5. Update [settings.js](https://github.com/bookercodes/slack-clone/blob/master/src/settings.js) with your newly-created `APP_ID` and `API_KEY`
+6. Run with `npm start` the app and login with one of the test users: superhero1, superhero2, superhero3, superhero4 or superhero5
 
-Once node and npm is installed successfully. You can verify from running following command :
+Questions about running the demo? [Open an issue](https://github.com/bookercodes/slack-clone/issues). We're here to help ✌️
 
-```bash
 
-node -v
+## Useful links
 
-```
+- 🏠 [CometChat Homepage](https://cometchat.com/pro)
+- 🚀 [Create your free account](https://app.cometchat.com/#/register)
+- 📚 [Documentation](https://prodocs.cometchat.com/docs)
+- 👾 [GitHub](https://github.com/CometChat-Pro)
 
-```bash
 
-npm -v
+## Useful examples
 
-```
+* [Complete React team chat app with voice and video calling](https://github.com/cometchat-pro/javascript-reactjs-chat-app)
 
-Now you are ready to sync application dependencies. Please follow the following steps:
 
-1. Install packages
 
-```bash
 
-npm install
 
-```
-
-Please Check **package.json** file for the dependency list.
-
-<br></br>
-
-## Config Chat App
-
-This chat app was built with create-react-app boiler plate.
-
-Please change `appId` and `apiKey` in _src/settings.js_ to the provided credentials.
-
-![Studio Guide](screenshots/studio.png "Logo Title Text 1")
-
-<br></br>
-
-## Run the app
-
-1. Test the demo app
-
-You can test the demo app with local server by running the following command.
-
-```bash
-
-npm start
-
-```
-
-Navigate to **localhost:3000** to check sample app.
-
-<br></br>
-
-You can click on any of the groups by the left side of the screen to start chatting in that group.
