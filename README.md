@@ -1,4 +1,4 @@
-# Build a modern Android chat app with Kotlin
+# Build a Slack-like Chat Application with React
 
 Read the full tutorial here:
 
