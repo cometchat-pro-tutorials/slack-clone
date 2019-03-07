@@ -29,9 +29,9 @@ Questions about running the demo? [Open an issue](https://github.com/cometchat-p
 
 ## Useful links
 
-- 🏠 [CometChat Homepage](https://cometchat.com/pro)
-- 🚀 [Create your free account](https://app.cometchat.com/#/register)
-- 📚 [Documentation](https://prodocs.cometchat.com/docs)
+- 🏠 [CometChat Homepage](https://cometchat.com/pro?utm_source=github&utm_medium=example-code-readme)
+- 🚀 [Create your free account](https://app.cometchat.com?utm_source=github&utm_medium=example-code-readme)
+- 📚 [Documentation](https://prodocs.cometchat.com/docs?utm_source=github&utm_medium=example-code-readme)
 - 👾 [GitHub](https://github.com/CometChat-Pro)
 
 
