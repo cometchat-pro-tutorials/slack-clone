@@ -2,7 +2,7 @@
 
 Read the full tutorial here:
 
-[**>> Build a Slack-like Chat Application with React**](https://paper.dropbox.com/doc/Build-a-Slack-like-Chat-Application-with-React--AXxbIL36hpeuN6nriJkQjY2XAg-tzBR56afFoHKvCKeOIYVm)
+[**>> Build a Slack-like Chat Application with React**](https://www.cometchat.com/pro/tutorials/build-a-slack-like-chat-application-with-react/?utm_source=github&utm_medium=example-code-readme)
 
 This demo app shows how to build a group group chat app with React:
 
@@ -14,17 +14,17 @@ This demo app shows how to build a group group chat app with React:
 
 To run the demo follow these steps:
 
-1. [Create a CometChat account](https://app.cometchat.com) if you haven't already
-2. From the [dashboard](https://app.cometchat.com/#/apps), create a new app called "React Group Chat"
+1. Head to [CometChat Pro](https://www.cometchat.com/pro/?utm_source=github&utm_medium=example-code-readme) and create an account
+2. From the [dashboard](https://app.cometchat.com/?utm_source=github&utm_medium=example-code-readme), create a new app called "React Group Chat"
 3. One created, click **Explore**
 4. Go to the **API Keys** tab and click **Create API Key**
 5. Create an API key called "React Group Chat Key" with **Auth Only** scope
-4. Download the repository [here](https://github.com/bookercodes/slack-clone/archive/master.zip) or by running `https://github.com/bookercodes/slack-clone.git`
+4. Download the repository [here](https://github.com/cometchat-pro-samples/slack-clone/archive/master.zip) or by running `https://github.com/cometchat-pro-samples/slack-clone`
 5. Run `npm install`
-5. Update [settings.js](https://github.com/bookercodes/slack-clone/blob/master/src/settings.js) with your newly-created `APP_ID` and `API_KEY`
+5. Update [settings.js](https://github.com/cometchat-pro-samples/slack-clone/blob/master/src/settings.js) with your newly-created `APP_ID` and `API_KEY`
 6. Run with `npm start` the app and login with one of the test users: superhero1, superhero2, superhero3, superhero4 or superhero5
 
-Questions about running the demo? [Open an issue](https://github.com/bookercodes/slack-clone/issues). We're here to help ✌️
+Questions about running the demo? [Open an issue](https://github.com/cometchat-pro-samples/slack-clone/issues). We're here to help ✌️
 
 
 ## Useful links
